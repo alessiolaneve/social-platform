@@ -1,0 +1,34 @@
+use db_social;
+
+(1)
+select distinct u.username
+from users u
+join medias m on u.id = user_id 
+where m.`type` like 'video';
+
+(2)
+select p.id, p.title, p.created_at
+from posts p 
+left join likes l on p.id = l.post_id 
+where l.user_id is null;
+
+(3)
+select p.title, p.created_at, count(l.user_id) as likes
+from posts p 
+left join likes l on p.id = l.post_id
+group by p.id , p.title 
+order by count(l.user_id)ASC;
+
+(4)
+select u.username, count(m.id) as Media
+from users u 
+left join medias m on u.id = m.user_id
+group by u.username
+order by Media DESC;
+
+(5)
+select u.username, count(l.user_id) as Likes 
+from users u 
+left join likes l on u.id = l.user_id 
+group by u.id 
+order by likes desc;
